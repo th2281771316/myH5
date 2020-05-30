@@ -7,82 +7,98 @@
 		#q{display:none;}
 		#r{display:none;}
 		#description{display:none;}
+		#z{display:none;}
 	</style>
 	<script>
 		var divisionDateId;
 
 		var divisionBaseDate=[
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0'],
-				['0','0','0','0','0','0','0','0','0','0']
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0]
 			];
 
-		var landNightAttack;
-		var divisionsSpeed;
-		var planningSpeed;
-		var maxPlanning;
-		var entrenchmentSpeed;
-		var maxEntrenchment;
-		var experiencedSoldierLosses;
-		var airSuperiority;
-		var reinforceRate;
-		var supplyConsumption;
-		var divisionAttrition;
-		var outOfSupply;
-		var supplyGrace;
-		var orgLossWhenMoving;
-		var ps0;
-		var ps1;
-		var ps2;
-		var ps3;
-		var ps4;
-		function getInitializeLandBase(){
-			landNightAttack=-50;
-			divisionsSpeed=0;
-			planningSpeed=100;
-			maxPlanning=30;
-			entrenchmentSpeed=100;
-			maxEntrenchment=5;
-			experiencedSoldierLosses=100;
-			airSuperiority=100;
-			reinforceRate=2;
-			supplyConsumption=100;
-			divisionAttrition=100;
-			outOfSupply=100;
-			supplyGrace=72;
-			orgLossWhenMoving=-20;
-			ps0=0;
-			ps1=0;
-			ps2=0;
-			ps3=0;
-			ps4=20;
-			getLandBase();
+		/*var landNightAttack=-50;
+		var	divisionsSpeed=0;
+		var	planningSpeed=100;
+		var	maxPlanning=30;
+		var	entrenchmentSpeed=100;
+		var	maxEntrenchment=5;
+		var	experiencedSoldierLosses=100;
+		var	airSuperiority=100;
+		var	reinforceRate=2;
+		var	supplyConsumption=100;
+		var	divisionAttrition=100;
+		var	outOfSupply=100;
+		var	supplyGrace=72;
+		var	orgLossWhenMoving=-20;
+		var	ps0=0;
+		var	ps1=0;
+		var	ps2=0;
+		var	ps3=0;
+		var	ps4=20;*/
+
+		var landDate=[-50,0,100,30,100,5,100,100,2,100,100,100,72,-20,0,0,0,0,20];
+
+		var needResearch=document.getElementsByName("needResearch");
+
+		var zc=document.getElementsByName("zc");
+		
+		function getInitializeTactics(){
+			for(var i=0;i<needResearch.length;i++){
+				needResearch[i].style.background='#cfcfcf';
+			}
 		}
 
+		function zcInitializeTactics(flag){
+			if(flag==1){
+				for(var i=0;i<zc.length;i++){
+					zc[i].style.background='white';
+				}
+			}else if(flag==0){
+				for(var i=0;i<zc.length;i++){
+					zc[i].style.background='#cfcfcf';
+				}
+			}
+			
+		}
+
+		function tacticsChange(num,flag){
+			if(flag==1){
+				needResearch[num].style.background='white';
+				if(num==9){
+					zcInitializeTactics(1)
+				}
+			}else if(flag==0){
+				needResearch[num].style.background='#cfcfcf';
+				if(num==9){
+					zcInitializeTactics(0)
+				}
+			}
+		}
+
+		function getInitializeLandBase(){
+			landDate=[-50,0,100,30,100,5,100,100,2,100,100,100,72,-20,0,0,0,0,20];
+			getLandBase();
+		}
 		function getLandBase(){
-			document.getElementById("landNightAttack").innerHTML=landNightAttack+"%";
-			document.getElementById("divisionsSpeed").innerHTML=divisionsSpeed+"%";
-			document.getElementById("planningSpeed").innerHTML=planningSpeed+"%";
-			document.getElementById("maxPlanning").innerHTML=maxPlanning+"%";
-			document.getElementById("entrenchmentSpeed").innerHTML=entrenchmentSpeed+"%";
-			document.getElementById("maxEntrenchment").innerHTML=maxEntrenchment;
-			document.getElementById("experiencedSoldierLosses").innerHTML=experiencedSoldierLosses+"%";
-			document.getElementById("airSuperiority").innerHTML=airSuperiority+"%";
-			document.getElementById("reinforceRate").innerHTML=reinforceRate+"%";
-			document.getElementById("supplyConsumption").innerHTML=supplyConsumption+"%";
-			document.getElementById("divisionAttrition").innerHTML=divisionAttrition+"%";
-			document.getElementById("outOfSupply").innerHTML=outOfSupply+"%";
-			document.getElementById("supplyGrace").innerHTML=supplyGrace+"小时";
-			document.getElementById("orgLossWhenMoving").innerHTML=orgLossWhenMoving+"%";
-			document.getElementById("ps0").innerHTML="+"+ps0;
-			document.getElementById("ps1").innerHTML=ps1+"%";
-			document.getElementById("ps2").innerHTML=ps2+"%";
-			document.getElementById("ps3").innerHTML=ps3+"%";
-			document.getElementById("ps4").innerHTML=ps4+"%";
+			var land=document.getElementsByName("landBaseDate");
+			for (var i=0;i<land.length ;i++ ){
+				
+				if(i==5){
+					land[i].innerHTML=landDate[i];
+				}else if(i==12){
+					land[i].innerHTML=landDate[i]+"小时";
+				}else if(i==14){
+					land[i].innerHTML="+"+landDate[i];
+				}else{
+					land[i].innerHTML=landDate[i]+"%";
+				}
+			}
 		}
 		function getInitializeDivisionBase(){
 			divisionBaseDate=[
@@ -108,7 +124,7 @@
 				}
 			}
 		}
-		function cancalCheckbox(){
+		function initializeCheckbox(){
 			var ckn=document.getElementsByName("message");
 			for(var i=0;i<ckn.length;i++){
 				ckn[i].checked=false;
@@ -120,15 +136,21 @@
 				ckf[i].disabled=false;
 			}
 		}
+		function initializeShow(){
+			getInitializeTactics();
+			zcInitializeTactics(0);
+			getInitializeLandBase();
+			getInitializeDivisionBase();
+			initializeCheckbox();
+		}
 		function s1(){
 			document.getElementById("j").style.display="block";
 			document.getElementById("y").style.display="none";
 			document.getElementById("q").style.display="none";
 			document.getElementById("r").style.display="none";
 			document.getElementById("description").style.display="block";
-			getInitializeLandBase();
-			getInitializeDivisionBase();
-			cancalCheckbox();
+			document.getElementById("z").style.display="block";
+			initializeShow();
 		}
 		function s2(){
 			document.getElementById("j").style.display="none";
@@ -136,9 +158,8 @@
 			document.getElementById("q").style.display="none";
 			document.getElementById("r").style.display="none";
 			document.getElementById("description").style.display="block";
-			getInitializeLandBase();
-			getInitializeDivisionBase();
-			cancalCheckbox();
+			document.getElementById("z").style.display="block";
+			initializeShow();
 		}
 		function s3(){
 			document.getElementById("j").style.display="none";
@@ -146,9 +167,8 @@
 			document.getElementById("q").style.display="block";
 			document.getElementById("r").style.display="none";
 			document.getElementById("description").style.display="block";
-			getInitializeLandBase();
-			getInitializeDivisionBase();
-			cancalCheckbox();
+			document.getElementById("z").style.display="block";
+			initializeShow();
 		}
 		function s4(){
 			document.getElementById("j").style.display="none";
@@ -156,31 +176,32 @@
 			document.getElementById("q").style.display="none";
 			document.getElementById("r").style.display="block";
 			document.getElementById("description").style.display="block";
-			getInitializeLandBase();
-			getInitializeDivisionBase();
-			cancalCheckbox();
+			document.getElementById("z").style.display="block";
+			initializeShow();
 		}
 		function Onj000(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("j010").disabled=false;
 				document.getElementById("text").innerHTML="坦克及变种车辆 突破+20%</br>战术【奇袭】</br>陆军师速度+10%</br>移动损失-10%</br>计划速度+50%";
-				divisionsSpeed+=10;
-				orgLossWhenMoving+=2;
-				planningSpeed+=50;
+				landDate[1]+=10;
+				landDate[13]+=2;
+				landDate[2]+=50;
 				getLandBase();
 				divisionBaseDate[6][0]+=20;
 				divisionBaseDate[6][1]+=20;
 				getDivisionDate();
+				tacticsChange(6,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j010").disabled=true;
 				document.getElementById("text").innerHTML="";
-				divisionsSpeed-=10;
-				orgLossWhenMoving-=2;
-				planningSpeed-=50;
+				landDate[1]-=10;
+				landDate[13]-=2;
+				landDate[2]-=50;
 				getLandBase();
 				divisionBaseDate[6][0]-=20;
 				divisionBaseDate[6][1]-=20;
 				getDivisionDate();
+				tacticsChange(6,0);
 			}
 		}
 		function Onj010(checkbox){
@@ -192,6 +213,7 @@
 				divisionBaseDate[1][3]+=15;
 				divisionBaseDate[1][4]+=15;
 				getDivisionDate();
+				tacticsChange(8,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j020").disabled=true;
 				document.getElementById("j000").disabled=false;
@@ -200,6 +222,7 @@
 				divisionBaseDate[1][3]-=15;
 				divisionBaseDate[1][4]-=15;
 				getDivisionDate();
+				tacticsChange(8,0);
 			}
 		}
 		function Onj020(checkbox){
@@ -208,25 +231,27 @@
 				document.getElementById("j300").disabled=false;
 				document.getElementById("j010").disabled=true;
 				document.getElementById("text").innerHTML="装甲车组织度+2，坦克组织度+1</br>坦克及变种车辆最大速度+10%</br>增援率+2%</br>战术【弹性防御】";
-				reinforceRate+=2;
+				landDate[8]+=2;
 				getLandBase();
 				divisionBaseDate[1][0]+=1;
 				divisionBaseDate[1][6]+=2;
 				divisionBaseDate[0][0]+=10;
 				divisionBaseDate[0][1]+=10;
 				getDivisionDate();
+				tacticsChange(10,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j003").disabled=true;
 				document.getElementById("j300").disabled=true;
 				document.getElementById("j010").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=2;
+				landDate[8]-=2;
 				getLandBase();
 				divisionBaseDate[1][0]-=1;
 				divisionBaseDate[1][6]-=2;
 				divisionBaseDate[0][0]-=10;
 				divisionBaseDate[0][1]-=10;
 				getDivisionDate();
+				tacticsChange(10,0);
 			}
 		}
 		function Onj300(checkbox){
@@ -269,6 +294,7 @@
 				divisionBaseDate[1][0]+=3;
 				divisionBaseDate[6][0]+=20;
 				getDivisionDate();
+				tacticsChange(1,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j020").disabled=false;
 				document.getElementById("j300").disabled=false;
@@ -277,6 +303,7 @@
 				divisionBaseDate[1][0]-=3;
 				divisionBaseDate[6][0]-=20;
 				getDivisionDate();
+				tacticsChange(1,0);
 			}
 		}
 		function Onj400(checkbox){
@@ -328,6 +355,7 @@
 				divisionBaseDate[1][5]+=15;
 				divisionBaseDate[1][6]+=3;
 				getDivisionDate();
+				tacticsChange(1,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j060").disabled=true;
 				document.getElementById("j400").disabled=false;
@@ -338,13 +366,14 @@
 				divisionBaseDate[1][5]-=15;
 				divisionBaseDate[1][6]-=3;
 				getDivisionDate();
+				tacticsChange(1,0);
 			}
 		}
 		function Onj005(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("j060").disabled=false;
 				document.getElementById("j004").disabled=true;
-				document.getElementById("text").innerHTML="装甲车组织度+7，摩托化步兵、机械化步兵、两栖机械化步兵组织度+5，坦克组织度+1</br>装甲车、坦克及其变种车辆恢复速度+0.10</br>战术【突破】";
+				document.getElementById("text").innerHTML="装甲车组织度+7，摩托化步兵、机械化步兵、两栖机械化步兵组织度+5，坦克组织度+1</br>装甲车、坦克及其变种车辆恢复速度+0.10<br>战术【突破】";
 				divisionBaseDate[1][0]+=1;
 				divisionBaseDate[1][3]+=5;
 				divisionBaseDate[1][4]+=5;
@@ -353,6 +382,7 @@
 				divisionBaseDate[2][0]+=0.1;
 				divisionBaseDate[2][1]+=0.1;
 				getDivisionDate();
+				tacticsChange(0,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j060").disabled=true;
 				document.getElementById("j004").disabled=false;
@@ -365,6 +395,7 @@
 				divisionBaseDate[2][0]-=0.1;
 				divisionBaseDate[2][1]-=0.1;
 				getDivisionDate();
+				tacticsChange(0,0);
 			}
 		}
 		function Onj060(checkbox){
@@ -373,8 +404,8 @@
 				document.getElementById("j007").disabled=false;
 				document.getElementById("j500").disabled=true;
 				document.getElementById("j005").disabled=true;
-				document.getElementById("text").innerHTML="步兵、摩托化步兵、机械化步兵恢复速度+0.20，组织度+10</br>计划速度+20%";
-				planningSpeed+=20;
+				document.getElementById("text").innerHTML="步兵、摩托化步兵、机械化步兵恢复速度+0.20，组织度+10</br>计划速度+20%<br>战术【压倒性火力】";
+				landDate[2]+=20;
 				getLandBase();
 				divisionBaseDate[1][2]+=10;
 				divisionBaseDate[1][3]+=10;
@@ -383,6 +414,7 @@
 				divisionBaseDate[2][3]+=0.2;
 				divisionBaseDate[2][4]+=0.2;
 				getDivisionDate();
+				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j700").disabled=true;
 				document.getElementById("j007").disabled=true;
@@ -392,7 +424,7 @@
 					document.getElementById("j005").disabled=false;
 				}
 				document.getElementById("text").innerHTML="";
-				planningSpeed-=20;
+				landDate[2]-=20;
 				getLandBase();
 				divisionBaseDate[1][2]-=10;
 				divisionBaseDate[1][3]-=10;
@@ -401,6 +433,7 @@
 				divisionBaseDate[2][3]-=0.2;
 				divisionBaseDate[2][4]-=0.2;
 				getDivisionDate();
+				tacticsChange(13,0);
 			}
 		}
 		function Onj700(checkbox){
@@ -409,14 +442,14 @@
 				document.getElementById("j007").disabled=true;
 				document.getElementById("j800").disabled=false;
 				document.getElementById("text").innerHTML="适役人口+2%";
-				ps3+=2;
+				landDate[17]+=2;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("j060").disabled=false;
 				document.getElementById("j007").disabled=false;
 				document.getElementById("j800").disabled=true;
 				document.getElementById("text").innerHTML="";
-				ps3-=2;
+				landDate[17]-=2;
 				getLandBase();
 			}
 		}
@@ -450,13 +483,13 @@
 				document.getElementById("j900").disabled=false;
 				document.getElementById("j700").disabled=true;
 				document.getElementById("text").innerHTML="适役人口+3%";
-				ps3+=3;
+				landDate[17]+=3;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("j900").disabled=true;
 				document.getElementById("j700").disabled=false;
 				document.getElementById("text").innerHTML="";
-				ps3-=3;
+				landDate[17]-=3;
 				getLandBase();
 			}
 		}
@@ -465,23 +498,27 @@
 				document.getElementById("j009").disabled=false;
 				document.getElementById("j007").disabled=true;
 				document.getElementById("text").innerHTML="战术【机动防御】";
+				tacticsChange(11,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j009").disabled=true;
 				document.getElementById("j007").disabled=false;
 				document.getElementById("text").innerHTML="";
+				tacticsChange(11,0);
 			}
 		}
 		function Onj900(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("j800").disabled=true;
-				document.getElementById("text").innerHTML="被敌方占领地区，对敌方驻军伤害+10%";
-				ps1+=10;
+				document.getElementById("text").innerHTML="被敌方占领地区，对敌方驻军伤害+10%<br>战术【游击战】";
+				landDate[15]+=10;
 				getLandBase();
+				tacticsChange(12,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("j800").disabled=false;
 				document.getElementById("text").innerHTML="";
-				ps1-=10;
+				landDate[15]-=10;
 				getLandBase();
+				tacticsChange(12,0);
 			}
 		}
 		function Onj009(checkbox){
@@ -515,11 +552,13 @@
 				document.getElementById("text").innerHTML="所有前线部队对人员杀伤+10%</br>战术【弹幕拦截】";
 				divisionBaseDate[3][8]+=10;
 				getDivisionDate();
+				tacticsChange(7,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y010").disabled=true;
 				document.getElementById("text").innerHTML="";
 				divisionBaseDate[3][8]-=10;
 				getDivisionDate();
+				tacticsChange(7,0);
 			}
 		}
 		function Ony010(checkbox){
@@ -529,12 +568,14 @@
 				document.getElementById("text").innerHTML="步兵组织度+15</br>战术【迟滞】";
 				divisionBaseDate[1][2]+=15;
 				getDivisionDate();
+				tacticsChange(8,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y020").disabled=true;
 				document.getElementById("y000").disabled=false;
 				document.getElementById("text").innerHTML="";
 				divisionBaseDate[1][2]-=15;
 				getDivisionDate();
+				tacticsChange(8,0);
 			}
 		}
 		function Ony020(checkbox){
@@ -547,6 +588,7 @@
 				divisionBaseDate[5][3]+=10;
 				divisionBaseDate[5][4]+=10;
 				getDivisionDate();
+				tacticsChange(10,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y003").disabled=true;
 				document.getElementById("y300").disabled=true;
@@ -556,6 +598,7 @@
 				divisionBaseDate[5][3]-=10;
 				divisionBaseDate[5][4]-=10;
 				getDivisionDate();
+				tacticsChange(10,0);
 			}
 		}
 		function Ony300(checkbox){
@@ -600,12 +643,14 @@
 				document.getElementById("text").innerHTML="牵引火炮对人员杀伤+10%</br>战术【压倒性火力】";
 				divisionBaseDate[3][8]+=10;
 				getDivisionDate();
+				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y050").disabled=true;
 				document.getElementById("y300").disabled=false;
 				document.getElementById("text").innerHTML="";
 				divisionBaseDate[3][8]-=10;
 				getDivisionDate();
+				tacticsChange(13,0);
 			}
 		}
 		function Ony004(checkbox){
@@ -616,6 +661,7 @@
 				divisionBaseDate[3][9]+=25;
 				divisionBaseDate[1][9]+=10;
 				getDivisionDate();
+				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y050").disabled=true;
 				document.getElementById("y003").disabled=false;
@@ -623,6 +669,7 @@
 				divisionBaseDate[3][9]-=25;
 				divisionBaseDate[1][9]-=10;
 				getDivisionDate();
+				tacticsChange(13,0);
 			}
 		}
 		function Ony050(checkbox){
@@ -635,6 +682,7 @@
 				divisionBaseDate[6][0]+=10;
 				divisionBaseDate[6][1]+=10;
 				getDivisionDate();
+				tacticsChange(1,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y600").disabled=true;
 				document.getElementById("y006").disabled=true;
@@ -647,6 +695,7 @@
 				divisionBaseDate[6][0]-=10;
 				divisionBaseDate[6][1]-=10;
 				getDivisionDate();
+				tacticsChange(1,0);
 			}
 		}
 		function Ony600(checkbox){
@@ -701,6 +750,7 @@
 				divisionBaseDate[4][0]+=10;
 				divisionBaseDate[4][1]+=10;
 				getDivisionDate();
+				tacticsChange(0,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y800").disabled=true;
 				document.getElementById("y600").disabled=false;
@@ -710,6 +760,7 @@
 				divisionBaseDate[4][0]-=10;
 				divisionBaseDate[4][1]-=10;
 				getDivisionDate();
+				tacticsChange(0,0);
 			}
 		}
 
@@ -718,15 +769,15 @@
 				document.getElementById("y008").disabled=false;
 				document.getElementById("y006").disabled=true;
 				document.getElementById("text").innerHTML="侦察连：侦察+1</br>增援率+2%";
-				ps0+=1;
-				reinforceRate+=2;
+				landDate[14]+=1;
+				landDate[8]+=2;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("y008").disabled=true;
 				document.getElementById("y006").disabled=false;
 				document.getElementById("text").innerHTML="";
-				ps0-=1;
-				reinforceRate-=2;
+				landDate[14]-=1;
+				landDate[8]-=2;
 				getLandBase();
 			}
 		}
@@ -735,14 +786,16 @@
 				document.getElementById("y900").disabled=false;
 				document.getElementById("y700").disabled=true;
 				document.getElementById("text").innerHTML="增援率+2%</br>战术【战术撤退】";
-				reinforceRate+=2;
+				landDate[8]+=2;
 				getLandBase();
+				tacticsChange(9,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y900").disabled=true;
 				document.getElementById("y700").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=2;
+				landDate[8]-=2;
 				getLandBase();
+				tacticsChange(9,0);
 			}
 		}
 		function Ony008(checkbox){
@@ -762,6 +815,7 @@
 				divisionBaseDate[2][3]+=0.05;
 				divisionBaseDate[2][4]+=0.05;
 				getDivisionDate();
+				tacticsChange(9,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y009").disabled=true;
 				document.getElementById("y007").disabled=false;
@@ -778,20 +832,21 @@
 				divisionBaseDate[2][3]-=0.05;
 				divisionBaseDate[2][4]-=0.05;
 				getDivisionDate();
+				tacticsChange(9,0);
 			}
 		}
 		function Ony900(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("y800").disabled=true;
 				document.getElementById("text").innerHTML="所有前线部队组织度+5</br>空优+20%";
-				airSuperiority+=20;
+				landDate[7]+=20;
 				getLandBase();
 				divisionBaseDate[1][8]+=5;
 				getDivisionDate();
 			}else if(checkbox.checked==false){
 				document.getElementById("y800").disabled=false;
 				document.getElementById("text").innerHTML="";
-				airSuperiority-=20;
+				landDate[7]-=20;
 				getLandBase();
 				divisionBaseDate[1][8]-=5;
 				getDivisionDate();
@@ -811,6 +866,7 @@
 				divisionBaseDate[4][4]+=5;
 				divisionBaseDate[4][7]+=5;
 				getDivisionDate();
+				tacticsChange(0,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y008").disabled=false;
 				document.getElementById("text").innerHTML="";
@@ -824,20 +880,21 @@
 				divisionBaseDate[4][4]-=5;
 				divisionBaseDate[4][7]-=5;
 				getDivisionDate();
+				tacticsChange(0,0);
 			}
 		}
 		function Onq000(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("q010").disabled=false;
 				document.getElementById("text").innerHTML="堑壕速度+25%</br>堑壕上限+10";
-				entrenchmentSpeed+=25;
-				maxEntrenchment+=10;
+				landDate[4]+=25;
+				landDate[5]+=10;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q010").disabled=true;
 				document.getElementById("text").innerHTML="";
-				entrenchmentSpeed-=25;
-				maxEntrenchment-=10;
+				landDate[4]-=25;
+				landDate[5]-=10;
 				getLandBase();
 			}
 		}
@@ -846,13 +903,13 @@
 				document.getElementById("q020").disabled=false;
 				document.getElementById("q000").disabled=true;
 				document.getElementById("text").innerHTML="计划加成上限+10%";
-				maxPlanning+=10;
+				landDate[3]+=10;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q020").disabled=true;
 				document.getElementById("q000").disabled=false;
 				document.getElementById("text").innerHTML="";
-				maxPlanning-=10;
+				landDate[3]-=10;
 				getLandBase();
 			}
 		}
@@ -892,6 +949,7 @@
 				divisionBaseDate[3][8]+=5;
 				divisionBaseDate[3][9]+=5;
 				getDivisionDate();
+				tacticsChange(4,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q400").disabled=true;
 				document.getElementById("q004").disabled=true;
@@ -902,6 +960,7 @@
 				divisionBaseDate[3][8]-=5;
 				divisionBaseDate[3][9]-=5;
 				getDivisionDate();
+				tacticsChange(4,0);
 			}
 		}
 		function Onq400(checkbox){
@@ -915,6 +974,8 @@
 				divisionBaseDate[1][5]+=5;
 				divisionBaseDate[1][6]+=5;
 				getDivisionDate();
+				tacticsChange(1,1);
+				tacticsChange(10,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q030").disabled=false;
 				document.getElementById("q004").disabled=false;
@@ -925,6 +986,8 @@
 				divisionBaseDate[1][5]-=5;
 				divisionBaseDate[1][6]-=5;
 				getDivisionDate();
+				tacticsChange(1,0);
+				tacticsChange(10,0);
 			}
 		}
 		function Onq004(checkbox){
@@ -936,6 +999,7 @@
 				divisionBaseDate[6][2]+=5;
 				divisionBaseDate[1][2]+=5;
 				getDivisionDate();
+				tacticsChange(3,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q030").disabled=false;
 				document.getElementById("q400").disabled=false;
@@ -944,6 +1008,7 @@
 				divisionBaseDate[6][2]-=5;
 				divisionBaseDate[1][2]-=5;
 				getDivisionDate();
+				tacticsChange(3,0);
 			}
 		}
 		function Onq500(checkbox){
@@ -951,14 +1016,16 @@
 				document.getElementById("q600").disabled=false;
 				document.getElementById("q400").disabled=true;
 				document.getElementById("text").innerHTML="计划加成上限+10%</br>战术【压倒性火力】";
-				maxPlanning+=10;
+				landDate[3]+=10;
 				getLandBase();
+				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q600").disabled=true;
 				document.getElementById("q400").disabled=false;
 				document.getElementById("text").innerHTML="";
-				maxPlanning-=10;
+				landDate[3]-=10;
 				getLandBase();
+				tacticsChange(13,0);
 			}
 		}
 		function Onq005(checkbox){
@@ -972,6 +1039,8 @@
 				divisionBaseDate[2][1]+=0.1;
 				divisionBaseDate[2][6]+=0.1;
 				getDivisionDate();
+				tacticsChange(1,1);
+				tacticsChange(10,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q006").disabled=true;
 				document.getElementById("q004").disabled=false;
@@ -982,6 +1051,8 @@
 				divisionBaseDate[2][1]-=0.1;
 				divisionBaseDate[2][6]-=0.1;
 				getDivisionDate();
+				tacticsChange(1,0);
+				tacticsChange(10,0);
 			}
 		}
 		function Onq600(checkbox){
@@ -1012,13 +1083,13 @@
 				document.getElementById("q007").disabled=false;
 				document.getElementById("q005").disabled=true;
 				document.getElementById("text").innerHTML="补给消耗-10%";
-				supplyConsumption-=10;
+				landDate[9]-=10;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q007").disabled=true;
 				document.getElementById("q005").disabled=false;
 				document.getElementById("text").innerHTML="";
-				supplyConsumption+=10;
+				landDate[9]+=10;
 				getLandBase();
 			}
 		}
@@ -1030,6 +1101,7 @@
 				divisionBaseDate[6][8]+=10;
 				divisionBaseDate[6][9]+=10;
 				getDivisionDate();
+				tacticsChange(0,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("q800").disabled=true;
 				document.getElementById("q600").disabled=false;
@@ -1037,6 +1109,7 @@
 				divisionBaseDate[6][8]-=10;
 				divisionBaseDate[6][9]-=10;
 				getDivisionDate();
+				tacticsChange(0,0);
 			}
 		}
 		function Onq007(checkbox){
@@ -1044,13 +1117,13 @@
 				document.getElementById("q008").disabled=false;
 				document.getElementById("q006").disabled=true;
 				document.getElementById("text").innerHTML="陆战夜战攻击+25%";
-				landNightAttack+=25;
+				landDate[0]+=25;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q008").disabled=true;
 				document.getElementById("q006").disabled=false;
 				document.getElementById("text").innerHTML="";
-				landNightAttack-=25;
+				landDate[0]-=25;
 				getLandBase();
 			}
 		}
@@ -1059,13 +1132,13 @@
 				document.getElementById("q900").disabled=false;
 				document.getElementById("q700").disabled=true;
 				document.getElementById("text").innerHTML="计划加成上限+10%";
-				maxPlanning+=10;
+				landDate[3]+=10;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q900").disabled=true;
 				document.getElementById("q700").disabled=false;
 				document.getElementById("text").innerHTML="";
-				maxPlanning-=10;
+				landDate[3]-=10;
 				getLandBase();
 			}
 		}
@@ -1096,7 +1169,7 @@
 			if(checkbox.checked==true){
 				document.getElementById("q800").disabled=true;
 				document.getElementById("text").innerHTML="装甲车组织度+2，坦克组织度+1，步兵、摩托化步兵、机械化步兵组织度+5</br>增援率+2%";
-				reinforceRate+=2;
+				landDate[8]+=2;
 				getLandBase();
 				divisionBaseDate[1][0]+=1;
 				divisionBaseDate[1][6]+=2;
@@ -1107,7 +1180,7 @@
 			}else if(checkbox.checked==false){
 				document.getElementById("q800").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=2;
+				landDate[8]-=2;
 				getLandBase();
 				divisionBaseDate[1][0]-=1;
 				divisionBaseDate[1][6]-=2;
@@ -1121,14 +1194,14 @@
 			if(checkbox.checked==true){
 				document.getElementById("q008").disabled=true;
 				document.getElementById("text").innerHTML="侦察连：侦察+1</br>增援率+2";
-				ps0+=1;
-				reinforceRate+=2;
+				landDate[14]+=1;
+				landDate[8]+=2;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("q008").disabled=false;
 				document.getElementById("text").innerHTML="";
-				ps0-=1;
-				reinforceRate-=2;
+				landDate[14]-=1;
+				landDate[8]-=2;
 				getLandBase();
 			}
 		}
@@ -1136,14 +1209,14 @@
 			if(checkbox.checked==true){
 				document.getElementById("r010").disabled=false;
 				document.getElementById("text").innerHTML="增援率+2%</br>最小训练度-10%";
-				ps4-=10;
-				reinforceRate+=2;
+				landDate[18]-=10;
+				landDate[8]+=2;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("r010").disabled=true;
 				document.getElementById("text").innerHTML="";
-				ps4+=10;
-				reinforceRate-=2;
+				landDate[18]+=10;
+				landDate[8]-=2;
 				getLandBase();
 			}
 		}
@@ -1152,15 +1225,15 @@
 				document.getElementById("r020").disabled=false;
 				document.getElementById("r000").disabled=true;
 				document.getElementById("text").innerHTML="补给耗尽-10%</br>携行补给+48小时";
-				outOfSupply-=10;
-				supplyGrace+=48;
+				landDate[11]-=10;
+				landDate[12]+=48;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("r020").disabled=true;
 				document.getElementById("r000").disabled=false;
 				document.getElementById("text").innerHTML="";
-				outOfSupply+=10;
-				supplyGrace-=48;
+				landDate[11]+=10;
+				landDate[12]-=48;
 				getLandBase();
 			}
 		}
@@ -1170,7 +1243,7 @@
 				document.getElementById("r003").disabled=false;
 				document.getElementById("r010").disabled=true;
 				document.getElementById("text").innerHTML="步兵组织度+5</br>堑壕上限+5";
-				maxEntrenchment+=5;
+				landDate[5]+=5;
 				getLandBase();
 				divisionBaseDate[1][2]+=5;
 				getDivisionDate();
@@ -1179,7 +1252,7 @@
 				document.getElementById("r003").disabled=true;
 				document.getElementById("r010").disabled=false;
 				document.getElementById("text").innerHTML="";
-				maxEntrenchment-=5;
+				landDate[5]-=5;
 				getLandBase();
 				divisionBaseDate[1][2]-=5;
 				getDivisionDate();
@@ -1191,15 +1264,17 @@
 				document.getElementById("r003").disabled=true;
 				document.getElementById("r400").disabled=false;
 				document.getElementById("text").innerHTML="补给耗尽-10%</br>战术【持续强袭】";
-				outOfSupply-=10;
+				landDate[11]-=10;
 				getLandBase();
+				tacticsChange(5,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r020").disabled=false;
 				document.getElementById("r003").disabled=false;
 				document.getElementById("r400").disabled=true;
 				document.getElementById("text").innerHTML="";
-				outOfSupply+=10;
+				landDate[11]+=10;
 				getLandBase();
+				tacticsChange(5,0);
 			}
 		}
 		function Onr003(checkbox){
@@ -1208,17 +1283,19 @@
 				document.getElementById("r300").disabled=true;
 				document.getElementById("r004").disabled=false;
 				document.getElementById("text").innerHTML="陆军损耗-10%</br>被敌方占领地区，对敌方驻军伤害+10%</br>战术【人海冲锋】";
-				ps1+=10;
-				divisionAttrition-=10;
+				landDate[15]+=10;
+				landDate[10]-=10;
 				getLandBase();
+				tacticsChange(2,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r020").disabled=false;
 				document.getElementById("r300").disabled=false;
 				document.getElementById("r004").disabled=true;
 				document.getElementById("text").innerHTML="";
-				ps1-=10;
-				divisionAttrition+=10;
+				landDate[15]-=10;
+				landDate[10]+=10;
 				getLandBase();
+				tacticsChange(2,0);
 			}
 		}
 		function Onr400(checkbox){
@@ -1229,6 +1306,7 @@
 				divisionBaseDate[1][0]+=2;
 				divisionBaseDate[1][6]+=2;
 				getDivisionDate();
+				tacticsChange(1,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r500").disabled=true;
 				document.getElementById("r300").disabled=false;
@@ -1236,6 +1314,7 @@
 				divisionBaseDate[1][0]-=2;
 				divisionBaseDate[1][6]-=2;
 				getDivisionDate();
+				tacticsChange(1,0);
 			}
 		}
 		function Onr004(checkbox){
@@ -1243,7 +1322,7 @@
 				document.getElementById("r005").disabled=false;
 				document.getElementById("r003").disabled=true;
 				document.getElementById("text").innerHTML="步兵恢复速度+0.30</br>增援率+5%";
-				reinforceRate+=5;
+				landDate[8]+=5;
 				getLandBase();
 				divisionBaseDate[2][2]+=0.3;
 				getDivisionDate();
@@ -1251,7 +1330,7 @@
 				document.getElementById("r005").disabled=true;
 				document.getElementById("r003").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=5;
+				landDate[8]-=5;
 				getLandBase();
 				divisionBaseDate[2][2]-=0.3;
 				getDivisionDate();
@@ -1262,16 +1341,18 @@
 				document.getElementById("r600").disabled=false;
 				document.getElementById("r400").disabled=true;
 				document.getElementById("text").innerHTML="增援率+5%</br>计划加成上限+10%</br>战术【弹性防御】";
-				reinforceRate+=5;
-				maxPlanning+=10;
+				landDate[8]+=5;
+				landDate[3]+=10;
 				getLandBase();
+				tacticsChange(10,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r600").disabled=true;
 				document.getElementById("r400").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=5;
-				maxPlanning-=10;
+				landDate[8]-=5;
+				landDate[3]-=10;
 				getLandBase();
+				tacticsChange(10,0);
 			}
 		}
 		function Onr005(checkbox){
@@ -1302,14 +1383,16 @@
 				document.getElementById("r700").disabled=false;
 				document.getElementById("r500").disabled=true;
 				document.getElementById("text").innerHTML="步兵战场宽度-0.4</br>补给消耗-10%</br>战术【压倒性火力】";
-				supplyConsumption-=10;
+				landDate[9]-=10;
 				getLandBase();
+				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r700").disabled=true;
 				document.getElementById("r500").disabled=false;
 				document.getElementById("text").innerHTML="";
-				supplyConsumption+=10;
+				landDate[9]+=10;
 				getLandBase();
+				tacticsChange(13,0);
 			}
 		}
 		function Onr006(checkbox){
@@ -1317,15 +1400,15 @@
 				document.getElementById("r007").disabled=false;
 				document.getElementById("r005").disabled=true;
 				document.getElementById("text").innerHTML="步兵战场宽度-0.4</br>适役人口+5%</br>增援率+15%";
-				ps3+=5;
-				reinforceRate+=15;
+				landDate[17]+=5;
+				landDate[8]+=15;
 				getLandBase();
 			}else if(checkbox.checked==false){
 				document.getElementById("r007").disabled=true;
 				document.getElementById("r005").disabled=false;
 				document.getElementById("text").innerHTML="";
-				reinforceRate-=15;
-				ps3-=5;
+				landDate[8]-=15;
+				landDate[17]-=5;
 				getLandBase();
 			}
 		}
@@ -1365,22 +1448,24 @@
 		function Onr007(checkbox){
 			if(checkbox.checked==true){
 				document.getElementById("r006").disabled=true;
-				document.getElementById("text").innerHTML="陆军恢复速度+0.20</br>补给耗尽-30%</br>敌占区抵抗增长速度+25%</br>战术【游击战术】";
-				ps2+=25;
-				outOfSupply-=30;
+				document.getElementById("text").innerHTML="陆军恢复速度+0.20</br>补给耗尽-30%</br>敌占区抵抗增长速度+25%</br>战术【游击战】";
+				landDate[16]+=25;
+				landDate[11]-=30;
 				getLandBase();
 				divisionBaseDate[2][8]+=0.2;
 				divisionBaseDate[2][9]+=0.2;
 				getDivisionDate();
+				tacticsChange(12,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r006").disabled=false;
 				document.getElementById("text").innerHTML="";
-				ps2-=25;
-				outOfSupply+=30;
+				landDate[16]-=25;
+				landDate[11]+=30;
 				getLandBase();
 				divisionBaseDate[2][8]-=0.2;
 				divisionBaseDate[2][9]-=0.2;
 				getDivisionDate();
+				tacticsChange(12,0);
 			}
 		}
 		function Onr800(checkbox){
@@ -1422,21 +1507,22 @@
 			if(checkbox.checked==true){
 				document.getElementById("r800").disabled=true;
 				document.getElementById("text").innerHTML="移动中组织度损失-25%</br>增援率+5%</br>战术【机动防御】";
-				orgLossWhenMoving+=5;
-				reinforceRate+=5;
+				landDate[13]+=5;
+				landDate[8]+=5;
 				getLandBase();
+				tacticsChange(11,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("r800").disabled=false;
 				document.getElementById("text").innerHTML="";
-				orgLossWhenMoving-=5;
-				reinforceRate-=5;
+				landDate[13]-=5;
+				landDate[8]-=5;
 				getLandBase();
+				tacticsChange(11,0);
 			}
 		}
 	</script>
 </head>
 <body>
-    
 	<div style="float:left;width:50%;">
 		<div style="margin-left:200px;width: 50%;" >
 			<h style="width: 160px ;font-size:20px ;color:black;left:100px 0;">学说选择</h>
@@ -1447,6 +1533,7 @@
 				<option onclick='s3()'>决战计划</option>
 				<option onclick='s4()'>人海战术</option>
 				</select>
+				<button onclick='test()'>测试</button>
 		</div>
 		<div id="j" style="margin-left:100px;width: 60%;" >
 			<h3  style="margin-left:110px">机动作战学说</h3>
@@ -1668,8 +1755,471 @@
 				</tr>
 			</table>
 		</div>
-		<div style="margin-left:100px;margin-top:40px" id="description">
-			<p id="text" width="600px"></p>
+		<div style="height:100px">
+			<div style="margin-left:100px;margin-top:40px；" id="description">
+				<p id="text" width="600px"></p>
+			</div>
+		</div>
+		<div id='z'>
+			<h2 style="margin-left:250px;">习得战术</h2>
+			红色为进攻方，绿色为防守方<br>
+			<h4 id="t1">默认阶段</h4>
+			<table border=1px>
+				<tr>
+					<td>战术名称</td>
+					<td>克制其的战术</td>
+					<td>进攻方进攻</td>
+					<td>防御方进攻</td>
+					<td>战场宽度</td>
+					<td>移动速度</td>
+					<td>对阶段影响</td>
+				</tr>
+				<tr>
+					<td style="color:red">进攻</td>
+					<td>反击</td>
+					<td>+5%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">强袭</td>
+					<td>反击</td>
+					<td>+25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><a href="#t2">近距离作战</a></td>
+				</tr>
+				<tr>
+					<td style="color:red">围攻</td>
+					<td>战术撤退</td>
+					<td>+25%</td>
+					<td>+5%</td>
+					<td>+50%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">冲击</td>
+					<td>伏击</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">突破</td>
+					<td>机动防御</td>
+					<td>+25%</td>
+					<td>-15%</td>
+					<td></td>
+					<td>+50%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">闪电战</td>
+					<td>弹性防御</td>
+					<td>+15%</td>
+					<td>-15%</td>
+					<td></td>
+					<td>+50%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">夺取桥梁</td>
+					<td></td>
+					<td>+20%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td>+10%</td>
+					<td><a href="#t3">占领桥梁</a></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">人海冲锋</td>
+					<td></td>
+					<td>+10%</td>
+					<td>+10%</td>
+					<td>+50%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">万岁冲锋</td>
+					<td>压倒性火力</td>
+					<td>+25%</td>
+					<td>+10%</td>
+					<td></td>
+					<td>+10%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">渗透强袭</td>
+					<td></td>
+					<td>+10%</td>
+					<td>-5%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">周密计划攻击</td>
+					<td></td>
+					<td>+15%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">持续强袭</td>
+					<td></td>
+					<td>+20%</td>
+					<td>+5%</td>
+					<td></td>
+					<td>+15%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">奇袭</td>
+					<td></td>
+					<td>+15%</td>
+					<td></td>
+					<td></td>
+					<td>+15%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="needResearch">弹幕拦截</td>
+					<td></td>
+					<td>+10%</td>
+					<td>-20%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">防御</td>
+					<td></td>
+					<td></td>
+					<td>+5%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">反击</td>
+					<td></td>
+					<td></td>
+					<td>+25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">迟滞</td>
+					<td>冲击</td>
+					<td>-25%</td>
+					<td>-15%</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">战术撤退</td>
+					<td></td>
+					<td>-25%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td><a href="#t5">战术撤退</a></td>
+				</tr>
+				<tr>
+					<td style="color:green">伏击</td>
+					<td>突破</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">弹性防御</td>
+					<td></td>
+					<td>-15%</td>
+					<td>+10%</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">机动防御</td>
+					<td></td>
+					<td>-20%</td>
+					<td>+25%</td>
+					<td></td>
+					<td>-30%</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">控制桥梁</td>
+					<td></td>
+					<td>+20%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td>+10%</td>
+					<td><a href="#t4">坚守桥梁</a></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">游击战</td>
+					<td></td>
+					<td>-70%</td>
+					<td>-60%</td>
+					<td>-50%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="needResearch">压倒性火力</td>
+					<td></td>
+					<td>-10%</td>
+					<td>+10%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+			ps:万岁冲锋国家必须是日本</br>
+			<h4 id="t2">近距离作战</h4>
+			<table border=1px>
+				<tr>
+					<td>战术名称</td>
+					<td>克制其的战术</td>
+					<td>进攻方进攻</td>
+					<td>防御方进攻</td>
+					<td>战场宽度</td>
+					<td>移动速度</td>
+					<td>对阶段影响</td>
+				</tr>
+				<tr>
+					<td style="color:red">短兵进攻</td>
+					<td></td>
+					<td>+10%</td>
+					<td>+5%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">短兵突击</td>
+					<td></td>
+					<td>+20%</td>
+					<td>+20%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">短兵撤退</td>
+					<td></td>
+					<td>-5%</td>
+					<td>-5%</td>
+					<td></td>
+					<td></td>
+					<td><a href="#t1">默认阶段</a></td>
+				</tr>
+				<tr>
+					<td style="color:green">短兵防御</td>
+					<td></td>
+					<td>+5%</td>
+					<td>+10%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">短兵防守支持点</td>
+					<td></td>
+					<td></td>
+					<td>+20%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+			<h4 id="t3">占领桥梁</h4>
+			<table border=1px>
+				<tr>
+					<td>战术名称</td>
+					<td>克制其的战术</td>
+					<td>进攻方进攻</td>
+					<td>防御方进攻</td>
+					<td>战场宽度</td>
+					<td>移动速度</td>
+					<td>对阶段影响</td>
+				</tr>
+				<tr>
+					<td style="color:red">控制桥梁</td>
+					<td></td>
+					<td>+20%</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">守卫桥梁</td>
+					<td></td>
+					<td>+20%</td>
+					<td>-10%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">强袭桥梁</td>
+					<td></td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">鲁莽强袭</td>
+					<td></td>
+					<td>+25%</td>
+					<td>-10%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">夺回桥梁</td>
+					<td>守卫桥梁</td>
+					<td>+10%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td><a href="#t4">坚守桥梁</td>
+				</tr>
+			</table>
+			<h4 id="t4">坚守桥梁</h4>
+			<table border=1px>
+				<tr>
+					<td>战术名称</td>
+					<td>克制其的战术</td>
+					<td>进攻方进攻</td>
+					<td>防御方进攻</td>
+					<td>战场宽度</td>
+					<td>移动速度</td>
+					<td>对阶段影响</td>
+				</tr>
+				<tr>
+					<td style="color:red">进攻桥梁</td>
+					<td></td>
+					<td>+10%</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">速攻桥梁</td>
+					<td></td>
+					<td>+25%</td>
+					<td></td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red">突击桥梁</td>
+					<td>守卫桥梁</td>
+					<td>+20%</td>
+					<td>+5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td><a href="#t3">占领桥梁</a></td>
+				</tr>
+				<tr>
+					<td style="color:green">控制桥梁</td>
+					<td></td>
+					<td>+20%</td>
+					<td>-10%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green">守卫桥梁</td>
+					<td></td>
+					<td>+10%</td>
+					<td>+5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+			<h4 id="t5">战术撤退</h4>
+			<table border=1px>
+				<tr>
+					<td>战术名称</td>
+					<td>克制其的战术</td>
+					<td>进攻方进攻</td>
+					<td>防御方进攻</td>
+					<td>战场宽度</td>
+					<td>移动速度</td>
+					<td>对阶段影响</td>
+				</tr>
+				<tr>
+					<td style="color:red" name="zc">反冲击</td>
+					<td></td>
+					<td>-25%</td>
+					<td>-10%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="zc">追击</td>
+					<td>-15%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:red" name="zc">拦截</td>
+					<td></td>
+					<td>-5%</td>
+					<td>-10%</td>
+					<td></td>
+					<td></td>
+					<td><a href="#t1">默认阶段</td>
+				</tr>
+				<tr>
+					<td style="color:green" name="zc">撤退</td>
+					<td></td>
+					<td>-30%</td>
+					<td>-5%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="color:green" name="zc">迂回</td>
+					<td></td>
+					<td>-40%</td>
+					<td>-10%</td>
+					<td>-25%</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	<div style="float:right;width: 50%;">
@@ -1678,61 +2228,61 @@
 			<table border="1px" align="center">
 				<tr>
 					<td>陆战夜战攻击</td>
-					<td id="landNightAttack" width="65px" name="landBaseDate"></td>
+					<td width="65px" name="landBaseDate"></td>
 					<td>陆军师速度</td>
-					<td id="divisionsSpeed" width="65px" name="landBaseDate"></td>
+					<td width="65px" name="landBaseDate"></td>
 				</tr>
 				<tr>
 					<td>计划速度</td>
-					<td id="planningSpeed" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 					<td>计划加成上限</td>
-					<td id="maxPlanning" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
 					<td>堑壕速度</td>
-					<td id="entrenchmentSpeed" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 					<td>堑壕上限</td>
-					<td id="maxEntrenchment" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
 					<td>有经验的士兵损失</td>
-					<td id="experiencedSoldierLosses" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 					<td>空优</td>
-					<td id="airSuperiority" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
-					<td bgcolor="#afafaf"><a onclick="alert(预备队每小时增援到一线的可能性)">增援率</a></td>
-					<td id="reinforceRate" name="landBaseDate"></td>
-					<td onclick="alert(地面部队高效运作时需要消费多少补给量)" bgcolor="#afafaf">补给消耗</td>
-					<td id="supplyConsumption" name="landBaseDate"></td>
+					<td bgcolor="#afafaf"><a onclick='show(预备队每小时增援到一线的可能性)'>增援率</a></td>
+					<td name="landBaseDate"></td>
+					<td onclick='show(地面部队高效运作时需要消费多少补给量)' bgcolor="#afafaf">补给消耗</td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
-					<td onclick="alert(当部队通过时受到的损耗会造成多大的损失)" bgcolor="#afafaf">陆军损耗</td>
-					<td id="divisionAttrition" name="landBaseDate"></td>
-					<td onclick="alert(降低部队补给耗尽时的惩罚)" bgcolor="#afafaf">补给耗尽</td>
-					<td id="outOfSupply" name="landBaseDate"></td>
+					<td onclick='show(当部队通过时受到的损耗会造成多大的损失)' bgcolor="#afafaf">陆军损耗</td>
+					<td name="landBaseDate"></td>
+					<td onclick='show(降低部队补给耗尽时的惩罚)' bgcolor="#afafaf">补给耗尽</td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
-					<td onclick="alert(无补给时不对额外可以坚持的时间)" bgcolor="#afafaf">携行补给</td>
-					<td id="supplyGrace" name="landBaseDate"></td>
-					<td onclick="alert(当一个部队在移动中时会损失的组织度修正)" bgcolor="#afafaf">移动中组织度损失</td>
-					<td id="orgLossWhenMoving" name="landBaseDate"></td>
+					<td onclick='show(无补给时部队额外可以坚持的时间)' bgcolor="#afafaf">携行补给</td>
+					<td name="landBaseDate"></td>
+					<td onclick='show(当一个部队在移动中时会损失的组织度修正)' bgcolor="#afafaf">移动中组织度损失</td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
-					<td onclick='alert(增加触发更好战术的概率，增加战斗中获取情报的数量)' bgcolor="#afafaf">侦察连侦察</td>
-					<td id="ps0" name="landBaseDate"></td>
+					<td bgcolor="#afafaf"><a onclick='show(增加触发更好战术的概率，增加战斗中获取情报的数量)'>侦察连侦察</a></td>
+					<td name="landBaseDate"></td>
 					<td>敌占区抵抗杀伤</td>
-					<td id="ps1" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
 					<td>敌占区抵抗增速</td>
-					<td id="ps2" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 					<td>兵役人口</td>
-					<td id="ps3" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 				</tr>
 				<tr>
 					<td>最小训练度</td>
-					<td id="ps4" name="landBaseDate"></td>
+					<td name="landBaseDate"></td>
 					<td></td>
 					<td></td>
 				</tr>
