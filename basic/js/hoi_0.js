@@ -628,15 +628,15 @@
 				document.getElementById("y020").disabled=true;
 				document.getElementById("y003").disabled=true;
 				document.getElementById("y400").disabled=false;
-				document.getElementById("text").innerHTML="牵引火炮恢复速度+10%";
-				divisionBaseDate[2][8]+=10;
+				document.getElementById("text").innerHTML="牵引火炮恢复速度+0.20";
+				divisionBaseDate[2][7]+=0.2;
 				getDivisionDate();
 			}else if(checkbox.checked==false){
 				document.getElementById("y020").disabled=false;
 				document.getElementById("y003").disabled=false;
 				document.getElementById("y400").disabled=true;
 				document.getElementById("text").innerHTML="";
-				divisionBaseDate[2][8]-=10;
+				divisionBaseDate[2][7	]-=0.2;
 				getDivisionDate();
 			}
 		}
