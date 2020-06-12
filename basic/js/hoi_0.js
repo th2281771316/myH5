@@ -636,7 +636,7 @@
 				document.getElementById("y003").disabled=false;
 				document.getElementById("y400").disabled=true;
 				document.getElementById("text").innerHTML="";
-				divisionBaseDate[2][7	]-=0.2;
+				divisionBaseDate[2][7]-=0.2;
 				getDivisionDate();
 			}
 		}
@@ -663,14 +663,14 @@
 				document.getElementById("y050").disabled=false;
 				document.getElementById("y300").disabled=true;
 				document.getElementById("text").innerHTML="牵引火炮对人员杀伤+10%</br>战术【压倒性火力】";
-				divisionBaseDate[3][8]+=10;
+				divisionBaseDate[3][7]+=10;
 				getDivisionDate();
 				tacticsChange(13,1);
 			}else if(checkbox.checked==false){
 				document.getElementById("y050").disabled=true;
 				document.getElementById("y300").disabled=false;
 				document.getElementById("text").innerHTML="";
-				divisionBaseDate[3][8]-=10;
+				divisionBaseDate[3][7]-=10;
 				getDivisionDate();
 				tacticsChange(13,0);
 			}
